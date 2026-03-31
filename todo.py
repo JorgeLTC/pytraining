@@ -25,7 +25,8 @@ if __name__ == "__main__":
         print("2. Remove task")
         print("3. List tasks")
         print("4. Edit task")
-        print("5. Exit")
+        print("5. Mark task as done")
+        print("6. Exit")
         choice = int(input("Enter your choice: "))
         if choice == 1:
             task = input("Enter task: ")
@@ -40,4 +41,7 @@ if __name__ == "__main__":
             new_task = input("Enter new task: ")
             edit_task(task, new_task)
         elif choice == 5:
+            task = input("Enter task: ")
+            tasks[tasks.index(task)] = f"{task} (done)"
+        elif choice == 6:
             exit = True
