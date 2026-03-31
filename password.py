@@ -1,25 +1,28 @@
 import random
 import string
 
-wordbank = [
-    "summer",
-    "warehouse",
-    "winter",
-    "apple",
-    "jackson",
-    "sunday",
-    "monday",
-    "freedom",
-    "safety",
-]
-symbolpool = string.punctuation
+
+def generate_password(length):
+    if length < 4:
+        length = 4
+
+    symbolpool = string.punctuation
+    allchar = string.ascii_letters + string.digits + symbolpool
+
+    password = [
+        random.choice(string.ascii_lowercase),
+        random.choice(string.ascii_uppercase),
+        random.choice(string.digits),
+        random.choice(symbolpool),
+    ]
+
+    while len(password) < length:
+        password.append(random.choice(allchar))
+
+    random.shuffle(password)
+    return "".join(password)
 
 
-def generate_password():
-    password = ""
-    for i in range(4):
-        password += f"{random.choice(wordbank[0].upper())}{random.choice(wordbank[1:])}{random.randint(1, 20)}{random.choice(symbolpool)}"
-    return password
-
-
-print(generate_password())
+if __name__ == "__main__":
+    length = int(input("Enter password length: "))
+    print(generate_password(length))
