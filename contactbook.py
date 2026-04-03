@@ -73,12 +73,32 @@ def search_contact(name: str, contacts: dict[str, str]) -> bool:
         return False
 
 
-def display_contacts(contacts):
-    print(contacts)
+def display_contacts(contacts: dict[str, str]) -> None:
+    """
+    Display all saved contacts in a readable format.
+    """
+    print("\n" + "=" * 40)
+    print("          Contacts Available:")
+    print("=" * 40)
+    if not contacts:
+        print("No contacts saved yet")
+        print("=" * 40)
+        return
+
+    for i, (contact, phone) in enumerate(contacts.items(), 1):
+        print(f"{i:2}. {contact:20} → {phone}")
+    print("=" * 40)
 
 
 if __name__ == "__main__":
-    contacts = {"Juan": "123-321-4567"}
+    contacts = {
+        "Juan": "123-321-4567",
+        "Robert": "123-321-4568",
+        "Jackson": "123-321-4569",
+        "Darren": "123-321-4560",
+        "Jose": "123-321-4561",
+        "Daisy": "123-321-4562",
+    }
     while True:
         print("\n" + "=" * 40)
         print("          CONTACT BOOK")
