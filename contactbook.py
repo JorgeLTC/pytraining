@@ -40,7 +40,7 @@ def add_contact(name: str, phone: str, contacts: dict) -> bool:
 
     # Add the contact
     contacts[name] = formatted_phone
-    print(f"Contact '{name}' added succesfully!")
+    print(f"Contact '{name}' added successfully!")
     return True
 
 
@@ -90,6 +90,73 @@ def display_contacts(contacts: dict[str, str]) -> None:
     print("=" * 40)
 
 
+def edit_contact(contacts: dict[str, str]) -> None:
+    """
+    Edit an existing contact: update phone number or delete the contact.
+    """
+    if not contacts:
+        print("\nNo contacts saved yet.")
+        return
+
+    print("\n--- Edit Contact ---")
+    name = input("Enter the name of the contact: ").strip().title()
+
+    if name not in contacts:
+        print(f"Contact '{name}' not found.")
+        return
+
+    # Show current information
+    print(f"\nCurrent contact: {name} → {contacts[name]}")
+
+    print("\nWhat would you like to do?")
+    print("1 → Update phone number")
+    print("2 → Delete contact")
+    print("3 → Cancel")
+
+    try:
+        choice = int(input("\nSelect your choice: "))
+    except ValueError:
+        print("Please enter a valid number.")
+        return
+
+    match choice:
+        case 1:  # Update phone number
+            new_phone = input("\nEnter new phone number: ")
+
+            raw_phone = (
+                new_phone.replace("-", "")
+                .replace(" ", "")
+                .replace(".", "")
+                .replace("(", "")
+                .replace(")", "")
+            )
+
+            if not raw_phone.isdigit() or len(raw_phone) != 10:
+                print("Invalid phone number! Must be exactly 10 digits.")
+                return
+
+            formatted_phone = f"{raw_phone[:3]}-{raw_phone[3:6]}-{raw_phone[6:]}"
+            contacts[name] = formatted_phone
+            print(f"Contact '{name}' updated successfully!")
+
+        case 2:  # Delete
+            confirm = (
+                input(f"\nAre you sure you want to delete '{name}'? (y/n): ")
+                .strip()
+                .lower()
+            )
+            if confirm in ("y", "yes"):
+                del contacts[name]
+                print(f"Contact '{name}' has been deleted.")
+            else:
+                print("Delete cancelled.")
+
+        case 3:
+            print("Operation cancelled.")
+        case _:
+            print("Invalid choice.")
+
+
 if __name__ == "__main__":
     contacts = {
         "Juan": "123-321-4567",
@@ -106,7 +173,8 @@ if __name__ == "__main__":
         print("1 → Add Contact")
         print("2 → Search Contact")
         print("3 → Display All Contacts")
-        print("4 → Quit")
+        print("4 → Edit Contacts")
+        print("5 → Quit")
         print("=" * 40)
 
         try:
@@ -118,7 +186,7 @@ if __name__ == "__main__":
         match choice:
             case 1:
                 name = input("Enter a name: ")
-                phone = input("Enter aa phone number: ")
+                phone = input("Enter a phone number: ")
                 add_contact(name, phone, contacts)
             case 2:
                 name = input("Enter a name: ")
@@ -126,6 +194,8 @@ if __name__ == "__main__":
             case 3:
                 display_contacts(contacts)
             case 4:
+                edit_contact(contacts)
+            case 5:
                 print("Bye! Bye!")
                 break
             case _:
