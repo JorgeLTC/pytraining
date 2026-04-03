@@ -18,11 +18,13 @@ def main() -> None:
             print(f"Score: Player {user_score} | Computer {comp_score}")
             # Get the user's move
             user_move = (
-                input("\nEnter your move (Rock, Paper, Scissors)").strip().title()
+                input("\nEnter your move (Rock, Paper, Scissors): ").strip().title()
             )
 
             if user_move not in moves:
-                print("Invalid input, please choose between (Rock, Paper, Scissors) ")
+                print(
+                    "Invalid input, please choose between (Rock, Paper, Scissors).\n "
+                )
                 continue
             # Computer's move and display moves in this round
             comp_move = random.choice(moves)
